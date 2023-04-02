@@ -1,5 +1,5 @@
 const express = require('express');
-const dbConnection = require('./database/config');
+const { dbConnection } = require('./database/config');
 const cors = require('cors');
 require('dotenv').config();
 
@@ -21,6 +21,10 @@ app.use( express.json() );
 
 //* Rutas
 app.use('/api/auth', require('./routes/auth'));
+
+app.get('*', (req, res) => {
+    res.sendFile( __dirname + '/public/index.html');
+});
 
 
 //* Escuchar peticiones
