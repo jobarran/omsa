@@ -108,10 +108,23 @@ const revalidarToken = async (req, res = response ) => {
         sector,
         token
     })
+};
+
+const getUsuarios = async( req, res = response ) => {
+
+    const usuarios = await Usuario.find()
+                                .populate( 'name', 'sector' );
+
+    res.json({
+        ok: true,
+        usuarios,
+    })
+
 }
 
 module.exports = {
     crearUsuario,
     loginUsuario,
     revalidarToken,
+    getUsuarios,
 }
