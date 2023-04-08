@@ -21,6 +21,7 @@ app.use( express.json() );
 
 //* Rutas
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/obras', require('./routes/obras'));
 
 app.get('*', (req, res) => {
     res.sendFile( __dirname + '/public/index.html');
