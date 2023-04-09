@@ -5,7 +5,7 @@
 
 const { Router } = require('express');
 const { check } = require('express-validator')
-const { crearUsuario, loginUsuario, revalidarToken, getUsuarios } = require('../controllers/auth');
+const { crearUsuario, loginUsuario, revalidarToken, getUsuarios, eliminarUsuario, actualizarUsuario } = require('../controllers/auth');
 const { validarCampos } = require('../middlewares/validar-compos');
 const { validarJWT } = require('../middlewares/validar-jwt');
 
@@ -34,8 +34,22 @@ router.post(
     ],
     loginUsuario);
 
+// Actualizazr usuario
+router.put(
+    '/:id',
+    [
+        check('name', 'El usuario es obligatorio').not().isEmpty(),
+        check('email', 'El email es obligatorio').isEmail(),
+        check('sector', 'El sector es obligatorio'),
+        validarCampos
+    ],
+    actualizarUsuario );
+
 // Obtener usuarios
 router.get('/', getUsuarios );
+
+// Borrar usuario
+router.delete('/:id', eliminarUsuario );
 
 router.get('/renew', validarJWT ,revalidarToken );
 

@@ -122,9 +122,81 @@ const getUsuarios = async( req, res = response ) => {
 
 }
 
+const eliminarUsuario = async( req, res = response ) => {
+
+    const usuarioId = req.params.id;
+    const uid = req.uid;
+
+    try {
+
+        const usuario = await Usuario.findById( usuarioId );
+
+        if ( !usuario ) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Usuario no existe por ese id'
+            });
+        }
+
+        await Usuario.findByIdAndDelete( usuarioId );
+
+        res.json({ ok: true });
+
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }
+
+}
+
+const actualizarUsuario = async( req, res = response ) => {
+    
+    const usuarioId = req.params.id;
+    const uid = req.uid;
+
+    try {
+
+        const usuario = await Usuario.findById( usuarioId );
+
+        if ( !usuario ) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Usuario no existe por ese id'
+            });
+        }
+
+        const nuevoUsuario = {
+            ...req.body,
+            user: uid
+        }
+
+        const usuarioActualizado = await Usuario.findByIdAndUpdate( usuarioId, nuevoUsuario, { new: true } );
+
+        res.json({
+            ok: true,
+            evento: usuarioActualizado
+        });
+
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }
+
+}
+
 module.exports = {
     crearUsuario,
     loginUsuario,
     revalidarToken,
     getUsuarios,
+    eliminarUsuario,
+    actualizarUsuario
 }
