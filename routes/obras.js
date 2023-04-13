@@ -5,7 +5,7 @@
 
 const { Router } = require('express');
 const { check } = require('express-validator')
-const { crearObra, getObras } = require('../controllers/obraAdmin');
+const { crearObra, getObras, eliminarObra, actualizarObra } = require('../controllers/obraAdmin');
 const { validarCampos } = require('../middlewares/validar-compos');
 const { validarJWT } = require('../middlewares/validar-jwt');
 
@@ -29,6 +29,19 @@ router.post(
     ],
     crearObra 
 );
+
+// Borrar obra
+router.delete('/:id', eliminarObra );
+
+// Actualizazr obra
+router.put(
+    '/:id',
+    [
+        check('name', 'El nombre es obligatorio').not().isEmpty(),
+        check('code', 'El código es obligatorio').not().isEmpty(),
+        validarCampos
+    ],
+    actualizarObra );
 
 // router.get('/renew', validarJWT ,revalidarToken );
 

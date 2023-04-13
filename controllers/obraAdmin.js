@@ -48,7 +48,79 @@ const crearObra = async(req, res = response ) => {
     }
 };
 
+const eliminarObra = async( req, res = response ) => {
+
+    const obraId = req.params.id;
+    const uid = req.uid;
+
+    try {
+
+        const obra = await Obra.findById( obraId );
+
+        if ( !obra ) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Obra no existe por ese id'
+            });
+        }
+
+        await Obra.findByIdAndDelete( obraId );
+
+        res.json({ ok: true });
+
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }
+
+};
+
+const actualizarObra = async( req, res = response ) => {
+    
+    const obraId = req.params.id;
+    const uid = req.uid;
+
+    try {
+
+        const obra = await Obra.findById( obraId );
+
+        if ( !obra ) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Obra no existe por ese id'
+            });
+        }
+
+        const nuevaObra = {
+            ...req.body,
+            obra: uid
+        }
+
+        const obraActualizada = await Obra.findByIdAndUpdate( obraId, nuevaObra, { new: true } );
+
+        res.json({
+            ok: true,
+            evento: obraActualizada
+        });
+
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }
+
+}
+
 module.exports = {
     crearObra,
-    getObras
+    getObras,
+    eliminarObra,
+    actualizarObra
 }
