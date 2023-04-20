@@ -6,7 +6,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator')
 const { validarCampos } = require('../middlewares/validar-compos');
-const { crearOm, getOms, actualizarOm } = require('../controllers/om');
+const { crearOm, getOms, actualizarOm, eliminarOm } = require('../controllers/om');
 
 const router = Router();
 
@@ -40,5 +40,8 @@ router.put(
         validarCampos
     ],
     actualizarOm );
+
+// Borrar om
+router.delete('/:id', eliminarOm );
 
 module.exports = router

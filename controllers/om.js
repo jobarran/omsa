@@ -89,7 +89,37 @@ const actualizarOm = async( req, res = response ) => {
         });
     }
 
-}
+};
+
+const eliminarOm = async( req, res = response ) => {
+
+    const omId = req.params.id;
+
+    try {
+
+        const om = await Om.findById( omId );
+
+        if ( !om ) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'OM no existe por ese id'
+            });
+        }
+
+        await Om.findByIdAndDelete( omId );
+
+        res.json({ ok: true });
+
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }
+
+};
 
 
 
@@ -97,4 +127,5 @@ module.exports = {
     crearOm,
     getOms,
     actualizarOm,
+    eliminarOm,
 }
