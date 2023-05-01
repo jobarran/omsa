@@ -6,7 +6,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator')
 const { validarCampos } = require('../middlewares/validar-compos');
-const { crearOm, getOms, actualizarOm, eliminarOm } = require('../controllers/om');
+const { crearOm, getOms, actualizarOm, eliminarOm, eliminarOmSubElement } = require('../controllers/om');
 
 const router = Router();
 
@@ -30,18 +30,17 @@ router.post(
     crearOm 
 );
 
-// Actualizazr om
+// Actualizazr OM
 router.put(
     '/:id',
-    [
-        check('name', 'El nombre es obligatorio').not().isEmpty(),
-        check('sector', 'El sector es obligatorio').not().isEmpty(),
-        check('task', 'La tarea es obligatoria').not().isEmpty(),
-        validarCampos
-    ],
-    actualizarOm );
+    actualizarOm);
+
+
 
 // Borrar om
 router.delete('/:id', eliminarOm );
+
+// Borrar omSubElement
+router.delete('/:id/:uid', eliminarOmSubElement );
 
 module.exports = router
