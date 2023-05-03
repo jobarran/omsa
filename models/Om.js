@@ -22,6 +22,13 @@ const OmSchema = Schema({
         type: String,
         require: true,
     },
+    request:{
+        type: Boolean,
+        default: false
+    },
+    necesity:{
+        type: Date
+    },
     elements: [{
         cant: {
             type: Number,
@@ -41,6 +48,7 @@ const OmSchema = Schema({
         },
         received:{
             type: Number,
+            default: 0,
             require: false
         }
 

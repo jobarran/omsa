@@ -41,6 +41,7 @@ const crearOm = async(req, res = response ) => {
             floor: om.floor,
             sector: om.sector,
             task: om.task,
+            request: om.request,
         })
     
     } catch (error) {
@@ -56,7 +57,7 @@ const actualizarOm = async( req, res = response ) => {
     
     const omId = req.params.id;
     const uid = req.uid;
-    const { name, sector, task, cant, code, desc } = req.body;
+    const { name, sector, task, cant, code, desc, received, request } = req.body;
 
     try {
 
@@ -75,7 +76,7 @@ const actualizarOm = async( req, res = response ) => {
         }
 
         const omActualizada = await Om.findByIdAndUpdate( omId, nuevaOm, { new: true } );
-        const elementosActualizados = await Om.findByIdAndUpdate( omId, { $push: { "elements": {cant, code, desc}} }, { new: true })
+        const elementosActualizados = await Om.findByIdAndUpdate( omId, { $push: { "elements": {cant, code, desc, received, request}} }, { new: true })
 
         res.json({
             ok: true,
