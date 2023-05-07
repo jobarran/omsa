@@ -6,12 +6,16 @@ const OmSchema = Schema({
         require: true,
     },
     name: {
-        type: String,
+        type: Number,
         require: true,
         unique: true
     },
-    floor: {
+    revision: {
         type: Number,
+        require: true,
+    },
+    floor: {
+        type: String,
         require: true,
     },
     sector: {

@@ -23,6 +23,8 @@ router.post(
     '/new', 
     [ // middlewares
         check('name', 'El nombre es obligatorio').not().isEmpty(),
+        check('revision', 'Numero de revision obligatorio').not().isEmpty(),
+        check('floor', 'El piso es obligatorio').not().isEmpty(),
         check('sector', 'El sector es obligatorio').not().isEmpty(),
         check('task', 'La tarea es obligatoria').not().isEmpty(),
         validarCampos

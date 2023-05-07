@@ -37,6 +37,7 @@ const crearOm = async(req, res = response ) => {
             ok: true,
             uid: om.id,
             obraId: om.obra_id,
+            revision: om.revision,
             name: om.name,
             floor: om.floor,
             sector: om.sector,
@@ -57,7 +58,7 @@ const actualizarOm = async( req, res = response ) => {
     
     const omId = req.params.id;
     const uid = req.uid;
-    const { name, sector, task, cant, code, desc, received, request } = req.body;
+    const { name, revision, floor, sector, task, cant, code, desc, received, request } = req.body;
 
     try {
 
@@ -71,7 +72,7 @@ const actualizarOm = async( req, res = response ) => {
         }
 
         const nuevaOm = {
-            ...{name, sector, task},
+            ...{name, revision, floor, sector, task},
             om: uid
         }
 
@@ -99,8 +100,6 @@ const eliminarOmSubElement = async( req, res = response ) => {
     const omId = req.params.id;
     const elId = req.params.uid;
 
-    console.log(omId);
-    console.log(elId);
 
     //res.json({ ok: true });
 
