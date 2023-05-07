@@ -26,12 +26,9 @@ const OmSchema = Schema({
         type: String,
         require: true,
     },
-    request:{
-        type: Boolean,
-        default: false
-    },
     necesity:{
-        type: Date
+        type: String,
+        default: null
     },
     elements: [{
         cant: {
@@ -41,10 +38,6 @@ const OmSchema = Schema({
         code: {
             type: String,
             require: true,
-        },
-        id: {
-            type: Number,
-            require: false
         },
         desc: {
             type: String,

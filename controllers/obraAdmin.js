@@ -29,7 +29,7 @@ const crearObra = async(req, res = response ) => {
         }
 
         obra = new Obra( req.body );
-    
+        
         await obra.save();
 
         res.status(201).json({

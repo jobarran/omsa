@@ -17,10 +17,9 @@ const getOms = async( req, res = response ) => {
 
 const crearOm = async(req, res = response ) => {
 
-    const { name, sector, task } = req.body;
-
+    const { name, obra_id, sector, task } = req.body;
     try {
-        let om = await Om.findOne({ name });
+        let om = await Om.findOne({ name, obra_id });
 
         if ( om ) {
             return res.status(400).json({
@@ -42,7 +41,6 @@ const crearOm = async(req, res = response ) => {
             floor: om.floor,
             sector: om.sector,
             task: om.task,
-            request: om.request,
         })
     
     } catch (error) {
@@ -58,8 +56,7 @@ const actualizarOm = async( req, res = response ) => {
     
     const omId = req.params.id;
     const uid = req.uid;
-    const { name, revision, floor, sector, task, cant, code, desc, received, request } = req.body;
-
+    const { name, revision, floor, sector, task, necesity, cant, code, desc, received } = req.body;
     try {
 
         const om = await Om.findById( omId );
@@ -72,13 +69,46 @@ const actualizarOm = async( req, res = response ) => {
         }
 
         const nuevaOm = {
-            ...{name, revision, floor, sector, task},
+            ...{name, revision, floor, sector, task, necesity },
             om: uid
         }
 
         const omActualizada = await Om.findByIdAndUpdate( omId, nuevaOm, { new: true } );
-        const elementosActualizados = await Om.findByIdAndUpdate( omId, { $push: { "elements": {cant, code, desc, received, request}} }, { new: true })
+        //const elementosActualizados = await Om.findByIdAndUpdate( omId, { $push: { "elements": {cant, code, desc, received }} }, { new: true })
 
+        res.json({
+            ok: true,
+            evento: omActualizada,
+        });
+
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }
+
+};
+
+const actualizarOmSubElement = async( req, res = response ) => {
+    
+    const omId = req.params.id;
+    const elId = req.params.uid;
+    const { necesity, cant, code, desc, received } = req.body;
+    try {
+
+        const om = await Om.findById( omId );
+
+        if ( !om ) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'OM no existe por ese id'
+            });
+        }
+
+        const elementosActualizados = await Om.findByIdAndUpdate( omId, { $push: { "elements": {cant, code, desc, received }} }, { new: true })
         res.json({
             ok: true,
             evento: elementosActualizados,
@@ -99,9 +129,6 @@ const eliminarOmSubElement = async( req, res = response ) => {
 
     const omId = req.params.id;
     const elId = req.params.uid;
-
-
-    //res.json({ ok: true });
 
     try {
 
@@ -167,5 +194,6 @@ module.exports = {
     getOms,
     actualizarOm,
     eliminarOm,
-    eliminarOmSubElement
+    eliminarOmSubElement,
+    actualizarOmSubElement
 }

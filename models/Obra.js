@@ -4,11 +4,15 @@ const ObraSchema = Schema({
     name: {
         type: String,
         require: true,
+        index:true, 
+        sparse:true,
     },
     code: {
         type: Number,
         require: true,
-        unique: true
+        unique: true,
+        index:true, 
+        sparse:true,
     },
 });
 
