@@ -1,50 +1,50 @@
 /*
     Rutas de Obras / Remitos
-    host + /api/remito
+    host + /api/remitos
 */
 
 const { Router } = require('express');
 const { check } = require('express-validator')
 const { validarCampos } = require('../middlewares/validar-compos');
-//* const {  } = require('../controllers/remito');
+const { getRemitos, createUpdateRemito, actualizarRemito, eliminarRemito,actualizarRemitoSubElement, eliminarRemitoSubElement,  } = require('../controllers/remito');
 
 const router = Router();
 
-//* router.get('/', getRemitos );
+router.get('/', getRemitos );
 
 // Nueva Remite
-router.post(
+router.put(
     '/new', 
     [ // middlewares
         check('name', 'El nombre es obligatorio').not().isEmpty(),
         check('date', 'La fecha es obligatoria').not().isEmpty(),
         validarCampos
     ],
-    //* crearRemito 
+    createUpdateRemito 
 );
 
 // Actualizazr Remito
 router.put(
     '/:id',
-    //* actualizarRemito
+    actualizarRemito
 );
 
 // Borrar Remito
 router.delete(
     '/:id', 
-    //* eliminarRemito
+    eliminarRemito
 );
 
 // Borrar RemitoSubElement
 router.delete(
     '/:id/:uid',
-    //* eliminarRemitoSubElement
+    eliminarRemitoSubElement
 );
 
 // New RemitoSubElement
 router.put(
     '/:id/add',
-    //* actualizarRemitoSubElement
+    actualizarRemitoSubElement
 );
 
 module.exports = router

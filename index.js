@@ -23,6 +23,7 @@ app.use( express.json() );
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/obras', require('./routes/obras'));
 app.use('/api/om', require('./routes/om'));
+app.use('/api/remitos', require('./routes/remitos'))
 
 app.get('*', (req, res) => {
     res.sendFile( __dirname + '/public/index.html');

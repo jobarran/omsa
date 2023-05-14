@@ -10,9 +10,13 @@ const RemitoSchema = Schema({
         type: String,
         default: null
     },
+    obra_id: {
+        type: Number,
+        require: true,
+    },
     remitoElements: [{
-        om_id: {
-            type: number,
+        omId: {
+            type: String,
             require: true,
         },
         cant: {

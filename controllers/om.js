@@ -95,8 +95,7 @@ const actualizarOm = async( req, res = response ) => {
 const actualizarOmSubElement = async( req, res = response ) => {
     
     const omId = req.params.id;
-    const elId = req.params.uid;
-    const { necesity, cant, code, desc, received } = req.body;
+    const { cant, code, desc, received } = req.body;
     try {
 
         const om = await Om.findById( omId );
